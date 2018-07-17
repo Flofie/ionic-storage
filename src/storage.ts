@@ -1,7 +1,8 @@
 import { InjectionToken } from '@angular/core';
 
 import * as LocalForage from 'localforage';
-
+import { extendPrototype } from 'localforage-setitems';
+extendPrototype(LocalForage);
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 
 /**
@@ -180,6 +181,10 @@ export class Storage {
    */
   set(key: string, value: any): Promise<any> {
     return this._dbPromise.then(db => db.setItem(key, value));
+  }
+
+  setItems(values: any[]): Promise<any> {
+    return this._dbPromise.then(db => db.setItems(values));
   }
 
   /**
